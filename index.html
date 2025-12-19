@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduAI - AI สำหรับการศึกษาไทย</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f9ff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1a6dff 0%, #0d4dc2 100%);
+            color: white;
+            padding: 30px 0;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+        }
+
+        .logo h1 {
+            font-size: 2.2rem;
+        }
+
+        .logo span {
+            color: #ffde59;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ffde59;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .hero h2 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #0d4dc2;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #555;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px 25px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            color: #1a6dff;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #0d4dc2;
+        }
+
+        .input-section {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .input-section h2 {
+            text-align: center;
+            color: #0d4dc2;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .input-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .tab-btn {
+            padding: 12px 25px;
+            background: #eef4ff;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active {
+            background: #1a6dff;
+            color: white;
+        }
+
+        .tab-btn:hover:not(.active) {
+            background: #d9e7ff;
+        }
+
+        .input-area {
+            display: none;
+        }
+
+        .input-area.active {
+            display: block;
+        }
+
+        .input-box {
+            width: 100%;
+            min-height: 200px;
+            padding: 20px;
+            border: 2px dashed #a8c6ff;
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            resize: vertical;
+        }
+
+        .input-box:focus {
+            outline: none;
+            border-color: #1a6dff;
+        }
+
+        .file-upload {
+            text-align: center;
+            padding: 40px;
+            border: 2px dashed #a8c6ff;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload:hover {
+            background: #f0f7ff;
+            border-color: #1a6dff;
+        }
+
+        .file-upload i {
+            font-size: 3rem;
+            color: #1a6dff;
+            margin-bottom: 15px;
+        }
+
+        .file-upload p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        .analyze-btn {
+            display: block;
+            width: 200px;
+            margin: 30px auto 0;
+            padding: 15px;
+            background: linear-gradient(to right, #1a6dff, #0d4dc2);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .analyze-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(26, 109, 255, 0.4);
+        }
+
+        .result-section {
+            margin-bottom: 50px;
+        }
+
+        .result-section h2 {
+            text-align: center;
+            color: #0d4dc2;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .result-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .result-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            min-height: 300px;
+        }
+
+        .result-card {
+            background: #f0f7ff;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .result-card h3 {
+            color: #0d4dc2;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .flashcard {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .flashcard:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .flashcard .question {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: #0d4dc2;
+        }
+
+        .flashcard .answer {
+            display: none;
+            color: #333;
+            padding-top: 15px;
+            border-top: 1px dashed #ccc;
+        }
+
+        .quiz-question {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .quiz-question h4 {
+            margin-bottom: 15px;
+            color: #0d4dc2;
+        }
+
+        .quiz-option {
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            background: #f5f9ff;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .quiz-option:hover {
+            background: #e1edff;
+        }
+
+        .quiz-option.correct {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .share-section {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 50px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .share-section h2 {
+            color: #0d4dc2;
+            margin-bottom: 20px;
+        }
+
+        .share-link {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .share-link input {
+            width: 70%;
+            padding: 12px 20px;
+            border: 2px solid #a8c6ff;
+            border-radius: 8px 0 0 8px;
+            font-size: 1rem;
+        }
+
+        .share-btn {
+            padding: 12px 25px;
+            background: #1a6dff;
+            color: white;
+            border: none;
+            border-radius: 0 8px 8px 0;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            background: #0d4dc2;
+            color: white;
+            border-radius: 15px 15px 0 0;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero h2 {
+                font-size: 2.2rem;
+            }
+            
+            .input-section, .result-content {
+                padding: 25px 20px;
+            }
+            
+            .share-link input {
+                width: 60%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-brain"></i>
+                    <h1>Edu<span>AI</span></h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">หน้าแรก</a></li>
+                        <li><a href="#analyze">วิเคราะห์เนื้อหา</a></li>
+                        <li><a href="#results">ผลลัพธ์</a></li>
+                        <li><a href="#share">แชร์ผลงาน</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero" id="home">
+            <h2>AI สำหรับการศึกษา</h2>
+            <p>วิเคราะห์บทความ ไฟล์เอกสาร และลิงค์เพื่อสร้างสรุปเนื้อหา ทำ flashcard และแบบทดสอบสำหรับฝึกทำข้อสอบ</p>
+            <div class="features">
+                <div class="feature-card">
+                    <i class="fas fa-file-alt"></i>
+                    <h3>สรุปเนื้อหา</h3>
+                    <p>AI จะสรุปเนื้อหาจากบทความ เอกสาร หรือเว็บไซต์ให้กระชับและเข้าใจง่าย</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-layer-group"></i>
+                    <h3>สร้าง Flashcard</h3>
+                    <p>สร้างบัตรคำศัพท์หรือคู่มือทบทวนจากเนื้อหาเพื่อช่วยในการจำ</p>
+                </div>
+                <div class="feature-card">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>แบบทดสอบ</h3>
+                    <p>สร้างแบบทดสอบจากเนื้อหาเพื่อฝึกฝนและเตรียมความพร้อมสำหรับการสอบ</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="input-section" id="analyze">
+            <h2>วิเคราะห์เนื้อหา</h2>
+            <div class="input-tabs">
+                <button class="tab-btn active" data-tab="text">ข้อความ</button>
+                <button class="tab-btn" data-tab="file">ไฟล์เอกสาร</button>
+                <button class="tab-btn" data-tab="link">ลิงค์ URL</button>
+            </div>
+            
+            <div id="text-input" class="input-area active">
+                <textarea class="input-box" placeholder="วางข้อความหรือบทความที่ต้องการวิเคราะห์ที่นี่...">ตัวอย่างเนื้อหา: การเปลี่ยนแปลงสภาพภูมิอากาศ (Climate Change) หมายถึง การเปลี่ยนแปลงของสภาพภูมิอากาศที่เกิดขึ้นในระดับโลก ซึ่งมีสาเหตุหลักจากกิจกรรมของมนุษย์ เช่น การเผาไหม้เชื้อเพลิงฟอสซิล การตัดไม้ทำลายป่า และการเกษตรแบบอุตสาหกรรม ส่งผลให้เกิดการเพิ่มขึ้นของก๊าซเรือนกระจกในชั้นบรรยากาศ เช่น คาร์บอนไดออกไซด์ มีเทน และไนตรัสออกไซด์ ผลกระทบที่สำคัญได้แก่ อุณหภูมิโลกที่สูงขึ้น ระดับน้ำทะเลที่เพิ่มขึ้น ภัยธรรมชาติที่รุนแรงขึ้น และการสูญเสียความหลากหลายทางชีวภาพ การแก้ไขปัญหาการเปลี่ยนแปลงสภาพภูมิอากาศจำเป็นต้องอาศัยความร่วมมือจากทุกประเทศในการลดการปล่อยก๊าซเรือนกระจก พัฒนาเทคโนโลยีพลังงานสะอาด และปรับตัวต่อผลกระทบที่เกิดขึ้นแล้ว</textarea>
+            </div>
+            
+            <div id="file-input" class="input-area">
+                <div class="file-upload">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>อัปโหลดไฟล์เอกสาร (PDF, Word, TXT)</p>
+                    <p>ลากไฟล์มาวางที่นี่หรือคลิกเพื่อเลือกไฟล์</p>
+                </div>
+            </div>
+            
+            <div id="link-input" class="input-area">
+                <textarea class="input-box" placeholder="วางลิงค์ URL ที่ต้องการวิเคราะห์ที่นี่...">https://th.wikipedia.org/wiki/%E0%B8%81%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%9B%E0%B8%A5%E0%B8%B5%E0%B9%88%E0%B8%A2%E0%B8%99%E0%B9%81%E0%B8%9B%E0%B8%A5%E0%B8%87%E0%B8%AA%E0%B8%A0%E0%B8%B2%E0%B8%9E%E0%B8%A0%E0%B8%B9%E0%B8%A1%E0%B8%B4%E0%B8%AD%E0%B8%B2%E0%B8%81%E0%B8%B2%E0%B8%A8</textarea>
+            </div>
+            
+            <button class="analyze-btn" id="analyzeBtn">วิเคราะห์ด้วย AI</button>
+        </section>
+
+        <section class="result-section" id="results">
+            <h2>ผลลัพธ์การวิเคราะห์</h2>
+            <div class="result-tabs">
+                <button class="tab-btn active" data-result="summary">สรุปเนื้อหา</button>
+                <button class="tab-btn" data-result="flashcards">Flashcards</button>
+                <button class="tab-btn" data-result="quiz">แบบทดสอบ</button>
+            </div>
+            
+            <div class="result-content">
+                <div id="summary-result" class="result-area active">
+                    <div class="result-card">
+                        <h3><i class="fas fa-list-alt"></i> สรุปเนื้อหา</h3>
+                        <p id="summary-text">สรุปเนื้อหาจะปรากฏที่นี่หลังจากวิเคราะห์</p>
+                    </div>
+                    <div class="result-card">
+                        <h3><i class="fas fa-key"></i> คำสำคัญ</h3>
+                        <p id="keywords-text">คำสำคัญจะปรากฏที่นี่หลังจากวิเคราะห์</p>
+                    </div>
+                </div>
+                
+                <div id="flashcards-result" class="result-area">
+                    <h3 style="text-align: center; margin-bottom: 20px;">Flashcards จากเนื้อหา</h3>
+                    <div id="flashcards-container">
+                        <!-- Flashcards will be generated here -->
+                    </div>
+                </div>
+                
+                <div id="quiz-result" class="result-area">
+                    <h3 style="text-align: center; margin-bottom: 20px;">แบบทดสอบจากเนื้อหา</h3>
+                    <div id="quiz-container">
+                        <!-- Quiz questions will be generated here -->
+                    </div>
+                    <div style="text-align: center; margin-top: 20px;">
+                        <button class="analyze-btn" id="checkQuizBtn" style="width: 150px;">ตรวจคำตอบ</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="share-section" id="share">
+            <h2>แชร์ผลลัพธ์</h2>
+            <p>คัดลอกลิงค์ด้านล่างเพื่อแชร์ผลลัพธ์ไปยัง Google Docs หรือแพลตฟอร์มอื่นๆ</p>
+            
+            <div class="share-link">
+                <input type="text" id="shareableLink" value="https://eduai-thailand.com/analyze/result/12345" readonly>
+                <button class="share-btn" id="copyLinkBtn">คัดลอกลิงค์</button>
+            </div>
+            
+            <p>หรือกดปุ่มด้านล่างเพื่อเปิดผลลัพธ์ใน Google Docs โดยตรง</p>
+            <button class="analyze-btn" id="openDocsBtn"><i class="fab fa-google-drive"></i> เปิดใน Google Docs</button>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>EduAI - AI สำหรับการศึกษาไทย</p>
+            <p>© 2023 สงวนลิขสิทธิ์ | พัฒนาเพื่อการศึกษา</p>
+        </div>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                
+                // Update tab buttons
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update input areas
+                document.querySelectorAll('.input-area').forEach(area => area.classList.remove('active'));
+                document.getElementById(tabId + '-input').classList.add('active');
+            });
+        });
+        
+        // Result tab switching functionality
+        document.querySelectorAll('[data-result]').forEach(button => {
+            button.addEventListener('click', function() {
+                const resultId = this.getAttribute('data-result');
+                
+                // Update tab buttons
+                document.querySelectorAll('[data-result]').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update result areas
+                document.querySelectorAll('.result-area').forEach(area => area.classList.remove('active'));
+                document.getElementById(resultId + '-result').classList.add('active');
+            });
+        });
+        
+        // Analyze button functionality
+        document.getElementById('analyzeBtn').addEventListener('click', function() {
+            const activeTab = document.querySelector('.tab-btn.active').getAttribute('data-tab');
+            let content = '';
+            
+            if (activeTab === 'text') {
+                content = document.querySelector('#text-input textarea').value;
+            } else if (activeTab === 'link') {
+                content = document.querySelector('#link-input textarea').value;
+            } else {
+                content = "เนื้อหาจากไฟล์เอกสารตัวอย่าง: การเปลี่ยนแปลงสภาพภูมิอากาศเป็นปัญหาสิ่งแวดล้อมที่สำคัญในศตวรรษที่ 21 ซึ่งเกิดจากกิจกรรมของมนุษย์ที่ปล่อยก๊าซเรือนกระจกสู่ชั้นบรรยากาศ ส่งผลให้อุณหภูมิเฉลี่ยของโลกเพิ่มขึ้น เกิดปรากฏการณ์เรือนกระจก และส่งผลกระทบต่อระบบนิเวศทั่วโลก";
+            }
+            
+            // Simulate AI analysis
+            simulateAnalysis(content);
+            
+            // Show results section
+            document.getElementById('results').scrollIntoView({behavior: 'smooth'});
+        });
+        
+        // Function to simulate AI analysis
+        function simulateAnalysis(content) {
+            // Show loading state
+            document.getElementById('summary-text').innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังวิเคราะห์เนื้อหา...';
+            document.getElementById('keywords-text').innerHTML = '<i class="fas fa-spinner fa-spin"></i> กำลังระบุคำสำคัญ...';
+            
+            setTimeout(() => {
+                // Generate summary
+                const summary = "การเปลี่ยนแปลงสภาพภูมิอากาศเป็นปัญหาสิ่งแวดล้อมที่สำคัญ เกิดจากกิจกรรมของมนุษย์ที่ปล่อยก๊าซเรือนกระจก ส่งผลให้อุณหภูมิโลกเพิ่มขึ้น ระดับน้ำทะเลสูงขึ้น และเกิดภัยธรรมชาติรุนแรงขึ้น การแก้ไขปัญหาต้องอาศัยความร่วมมือระดับโลกในการลดการปล่อยก๊าซเรือนกระจกและพัฒนาพลังงานสะอาด";
+                document.getElementById('summary-text').textContent = summary;
+                
+                // Generate keywords
+                const keywords = "การเปลี่ยนแปลงสภาพภูมิอากาศ, ก๊าซเรือนกระจก, อุณหภูมิโลก, ระดับน้ำทะเล, ภัยธรรมชาติ, พลังงานสะอาด, คาร์บอนไดออกไซด์";
+                document.getElementById('keywords-text').textContent = keywords;
+                
+                // Generate flashcards
+                generateFlashcards();
+                
+                // Generate quiz
+                generateQuiz();
+            }, 1500);
+        }
+        
+        // Function to generate flashcards
+        function generateFlashcards() {
+            const flashcardsContainer = document.getElementById('flashcards-container');
+            flashcardsContainer.innerHTML = '';
+            
+            const flashcards = [
+                { question: "การเปลี่ยนแปลงสภาพภูมิอากาศคืออะไร?", answer: "การเปลี่ยนแปลงของสภาพภูมิอากาศในระดับโลกที่มีสาเหตุหลักจากกิจกรรมของมนุษย์" },
+                { question: "ก๊าซเรือนกระจกหลักมีอะไรบ้าง?", answer: "คาร์บอนไดออกไซด์ มีเทน และไนตรัสออกไซด์" },
+                { question: "ผลกระทบหลักของการเปลี่ยนแปลงสภาพภูมิอากาศมีอะไรบ้าง?", answer: "อุณหภูมิโลกสูงขึ้น ระดับน้ำทะเลเพิ่มขึ้น ภัยธรรมชาติรุนแรงขึ้น" },
+                { question: "เราจะแก้ไขปัญหาการเปลี่ยนแปลงสภาพภูมิอากาศได้อย่างไร?", answer: "ลดการปล่อยก๊าซเรือนกระจก พัฒนาพลังงานสะอาด และปรับตัวต่อผลกระทบ" }
+            ];
+            
+            flashcards.forEach((card, index) => {
+                const flashcardElement = document.createElement('div');
+                flashcardElement.className = 'flashcard';
+                flashcardElement.innerHTML = `
+                    <div class="question">${card.question}</div>
+                    <div class="answer" id="answer-${index}">${card.answer}</div>
+                `;
+                
+                flashcardElement.addEventListener('click', () => {
+                    const answerElement = document.getElementById(`answer-${index}`);
+                    if (answerElement.style.display === 'block') {
+                        answerElement.style.display = 'none';
+                    } else {
+                        answerElement.style.display = 'block';
+                    }
+                });
+                
+                flashcardsContainer.appendChild(flashcardElement);
+            });
+        }
+        
+        // Function to generate quiz
+        function generateQuiz() {
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.innerHTML = '';
+            
+            const quizQuestions = [
+                {
+                    question: "สาเหตุหลักของการเปลี่ยนแปลงสภาพภูมิอากาศคืออะไร?",
+                    options: [
+                        "กิจกรรมทางธรรมชาติเช่นการระเบิดของภูเขาไฟ",
+                        "กิจกรรมของมนุษย์เช่นการเผาไหม้เชื้อเพลิงฟอสซิล",
+                        "การเปลี่ยนแปลงของวงโคจรโลก",
+                        "รังสีคอสมิกจากอวกาศ"
+                    ],
+                    correct: 1
+                },
+                {
+                    question: "ก๊าซใดไม่จัดเป็นก๊าซเรือนกระจก?",
+                    options: [
+                        "คาร์บอนไดออกไซด์",
+                        "มีเทน",
+                        "ออกซิเจน",
+                        "ไนตรัสออกไซด์"
+                    ],
+                    correct: 2
+                },
+                {
+                    question: "ผลกระทบใดต่อไปนี้ไม่เกี่ยวข้องกับการเปลี่ยนแปลงสภาพภูมิอากาศ?",
+                    options: [
+                        "อุณหภูมิโลกสูงขึ้น",
+                        "ระดับน้ำทะเลเพิ่มขึ้น",
+                        "ภัยธรรมชาติรุนแรงขึ้น",
+                        "การหมุนของโลกเร็วขึ้น"
+                    ],
+                    correct: 3
+                }
+            ];
+            
+            quizQuestions.forEach((q, index) => {
+                const questionElement = document.createElement('div');
+                questionElement.className = 'quiz-question';
+                questionElement.innerHTML = `
+                    <h4>คำถามที่ ${index + 1}: ${q.question}</h4>
+                `;
+                
+                q.options.forEach((option, optIndex) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'quiz-option';
+                    optionElement.textContent = option;
+                    optionElement.setAttribute('data-question', index);
+                    optionElement.setAttribute('data-option', optIndex);
+                    
+                    optionElement.addEventListener('click', function() {
+                        // Remove previous selection for this question
+                        const questionOptions = document.querySelectorAll(`[data-question="${index}"]`);
+                        questionOptions.forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        
+                        // Select this option
+                        this.classList.add('selected');
+                    });
+                    
+                    questionElement.appendChild(optionElement);
+                });
+                
+                quizContainer.appendChild(questionElement);
+            });
+        }
+        
+        // Check quiz answers
+        document.getElementById('checkQuizBtn').addEventListener('click', function() {
+            const selectedOptions = document.querySelectorAll('.quiz-option.selected');
+            
+            // Reset all options
+            document.querySelectorAll('.quiz-option').forEach(option => {
+                option.classList.remove('correct', 'incorrect');
+            });
+            
+            // Check answers
+            selectedOptions.forEach(option => {
+                const questionIndex = parseInt(option.getAttribute('data-question'));
+                const selectedAnswer = parseInt(option.getAttribute('data-option'));
+                
+                // For this simulation, we're using hardcoded correct answers
+                // In a real app, you would compare with the actual correct answers
+                const correctAnswers = [1, 2, 3];
+                
+                if (selectedAnswer === correctAnswers[questionIndex]) {
+                    option.classList.add('correct');
+                } else {
+                    option.classList.add('incorrect');
+                    
+                    // Also show the correct answer
+                    const questionOptions = document.querySelectorAll(`[data-question="${questionIndex}"]`);
+                    questionOptions[correctAnswers[questionIndex]].classList.add('correct');
+                }
+            });
+        });
+        
+        // Copy link functionality
+        document.getElementById('copyLinkBtn').addEventListener('click', function() {
+            const linkInput = document.getElementById('shareableLink');
+            linkInput.select();
+            linkInput.setSelectionRange(0, 99999); // For mobile devices
+            
+            navigator.clipboard.writeText(linkInput.value).then(() => {
+                const originalText = this.textContent;
+                this.textContent = 'คัดลอกแล้ว!';
+                setTimeout(() => {
+                    this.textContent = originalText;
+                }, 2000);
+            });
+        });
+        
+        // Open in Google Docs functionality
+        document.getElementById('openDocsBtn').addEventListener('click', function() {
+            // In a real application, this would open a Google Docs document
+            // with the analysis results pre-filled
+            alert('ในเวอร์ชันจริง ระบบจะเปิด Google Docs พร้อมผลลัพธ์ที่วิเคราะห์ได้');
+            
+            // For demo purposes, we'll just open a new tab with Google Docs
+            window.open('https://docs.google.com/document/create', '_blank');
+        });
+        
+        // File upload interaction
+        document.querySelector('.file-upload').addEventListener('click', function() {
+            alert('ในเวอร์ชันจริง ระบบจะเปิดหน้าต่างให้เลือกไฟล์ PDF, Word หรือ TXT เพื่ออัปโหลด');
+        });
+        
+        // Initialize with some content
+        window.onload = function() {
+            generateFlashcards();
+            generateQuiz();
+        }
+    </script>
+</body>
+</html>
